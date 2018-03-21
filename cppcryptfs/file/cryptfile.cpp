@@ -27,13 +27,13 @@ THE SOFTWARE.
 */
 
 #include "stdafx.h"
-#include "crypt/cryptdefs.h"
-#include "cryptio.h"
+#include "libcppcryptfs/cryptdefs.h"
+#include "libcppcryptfs/cryptio.h"
 #include "cryptfile.h"
-#include "filename/cryptfilename.h"
-#include "util/fileutil.h"
-#include "util/util.h"
-#include "crypt/crypt.h"
+#include "libcppcryptfs/cryptfilename.h"
+#include "libcppcryptfs/fileutil.h"
+#include "libcppcryptfs/util.h"
+#include "libcppcryptfs/crypt.h"
 #include "iobufferpool.h"
 
 CryptFile *CryptFile::NewInstance(CryptContext *con)

@@ -28,9 +28,9 @@ THE SOFTWARE.
 */
 
 #include "FileNameEnc.h"
-#include "util/util.h"
-#include "util/fileutil.h"
-#include "filename/cryptfilename.h"
+#include "libcppcryptfs/util.h"
+#include "libcppcryptfs/fileutil.h"
+#include "libcppcryptfs/cryptfilename.h"
 #include "dokan/dokan.h"
 #include "cryptdokan.h"
 #include "cryptdokanpriv.h"

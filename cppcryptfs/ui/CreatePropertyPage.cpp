@@ -35,12 +35,13 @@ THE SOFTWARE.
 #include "CreatePropertyPage.h"
 #include "afxdialogex.h"
 #include "FolderDialog.h"
-#include "util/fileutil.h"
-#include "config/cryptconfig.h"
+#include "winutil/winutil.h"
+#include "libcppcryptfs/fileutil.h"
+#include "libcppcryptfs/cryptconfig.h"
 #include "RecentItems.h"
-#include "crypt/cryptdefs.h"
-#include "util/LockZeroBuffer.h"
-#include "util/util.h"
+#include "libcppcryptfs/cryptdefs.h"
+#include "libcppcryptfs/LockZeroBuffer.h"
+#include "libcppcryptfs/util.h"
 
 static const WCHAR *filename_encryption_types[] = {
 	L"AES256-EME",
@@ -211,8 +212,17 @@ void CCreatePropertyPage::CreateCryptfs()
 	CString volume_name;
 	GetDlgItemText(IDC_VOLUME_NAME, volume_name);
 
+	const char *creator = NULL;
+	string creator_str;
+	wstring prodName, prodVersion, prodCopyright;
+	if (GetProductVersionInfo(prodName, prodVersion, prodCopyright)) {
+
+		wstring wcreator = prodName + L" v" + prodVersion;
+		creator = unicode_to_utf8(&wcreator[0], creator_str);
+	}
+
 	theApp.DoWaitCursor(1);
-	bool bResult = config.create(cpath, config_path, password.m_buf, eme, plaintext, longfilenames, siv, reverse, volume_name, error_mes);
+	bool bResult = config.create(cpath, config_path, password.m_buf, eme, plaintext, longfilenames, siv, reverse, volume_name, error_mes, creator);
 	theApp.DoWaitCursor(-1);
 
 	if (!bResult) {

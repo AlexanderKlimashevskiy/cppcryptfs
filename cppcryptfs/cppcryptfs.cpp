@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 #include "stdafx.h"
 #include "cppcryptfs.h"
-#include "crypt/cryptdefs.h"
+#include "libcppcryptfs/cryptdefs.h"
 #include "ui/CryptPropertySheet.h"
 #include "ui/MountPropertyPage.h"
 #include "ui/CreatePropertyPage.h"
@@ -42,10 +42,10 @@ THE SOFTWARE.
 #include "ui/RecentItems.h"
 #include "ui/TrayIcon.h"
 #include "dokan/cryptdokan.h"
-#include "util/getopt.h"
-#include "util/LockZeroBuffer.h"
-#include "util/util.h"
-#include "crypt/crypt.h"
+#include "winutil/getopt.h"
+#include "libcppcryptfs/LockZeroBuffer.h"
+#include "winutil/winutil.h"
+#include "libcppcryptfs/crypt.h"
 
 
 #ifdef _DEBUG

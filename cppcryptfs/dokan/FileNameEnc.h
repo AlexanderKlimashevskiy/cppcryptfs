@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include <string>
 
-#include "context/cryptcontext.h"
+#include "libcppcryptfs/cryptcontext.h"
 
 using namespace std;
 

@@ -25,61 +25,49 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+
 #pragma once
 
+#include <windows.h>
 
-// FsInfoDialog.h : header file
-//
+#include "libcppcryptfs/cryptdefs.h"
 
-/////////////////////////////////////////////////////////////////////////////
-// CFsInfoDialog dialog
+#include "openssl/aes.h"
 
-#include "libcppcryptfs/cryptcontext.h"
+#include "libcppcryptfs/aes.h"
 
-class CFsInfoDialog : public CDialog
-{
+#include "libcppcryptfs/LockZeroBuffer.h"
+
+
+
+
+class EmeCryptContext {
+public:
+	
 private:
-	
-// Construction
+
+	LockZeroBuffer<AES_KEY> *m_pKeyBuf;
+	LockZeroBuffer<BYTE> *m_pLTableBuf;
 public:
-	CFsInfoDialog(CWnd* pParent = NULL);   // standard constructor
+	AES m_aes_ctx;
+	LPBYTE *m_LTable;
 
-	FsInfo m_info;
-	CString m_mountPoint;
+	EmeCryptContext();
+
+	// disallow copying
+	EmeCryptContext(EmeCryptContext const&) = delete;
+	void operator=(EmeCryptContext const&) = delete;
+
+	virtual ~EmeCryptContext();
+
+	void tabulateL(int m);
+
+
+	bool init(const BYTE *key, bool hkdf);
 	
-
-// Dialog Data
-	//{{AFX_DATA(CFsInfoDialog)
-	// Dialog Data
-#ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_FSINFO };
-#endif
-	
-	//}}AFX_DATA
-
-
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CFsInfoDialog)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-
-	// Generated message map functions
-	//{{AFX_MSG(CFsInfoDialog)
-		// NOTE: the ClassWizard will add member functions here
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-public:
-
-	afx_msg void OnBnClickedOk();
-	virtual BOOL OnInitDialog();
-
 };
 
-//{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ will insert additional declarations immediately before the previous line.
+
+BYTE* EmeTransform(const EmeCryptContext *eme_context, 
+	const BYTE *T, const BYTE *P, int len, bool direction);
 

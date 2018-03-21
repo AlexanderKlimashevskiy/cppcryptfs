@@ -27,7 +27,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #include "dokan/dokan.h"
-#include "context/cryptcontext.h"
+#include "libcppcryptfs/cryptcontext.h"
 #include "cryptdokanpriv.h"
 
 class CryptThreadData {

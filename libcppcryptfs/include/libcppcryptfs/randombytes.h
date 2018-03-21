@@ -25,61 +25,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+
 #pragma once
 
+#include <windows.h>
 
-// FsInfoDialog.h : header file
-//
+#include "libcppcryptfs/LockZeroBuffer.h"
 
-/////////////////////////////////////////////////////////////////////////////
-// CFsInfoDialog dialog
+#define RANDOM_POOL_SIZE (32*1024)
 
-#include "libcppcryptfs/cryptcontext.h"
-
-class CFsInfoDialog : public CDialog
-{
+class RandomBytes {
 private:
-	
-// Construction
+
+	LockZeroBuffer<BYTE> *m_pRandBuf;
+
+	unsigned char *m_randbuf; // do not free this. it points to m_pRandBuf->m_buf;
+
+	DWORD m_bufpos;
+
+	CRITICAL_SECTION m_crit;
+
+
+	void lock();
+	void unlock();
+
 public:
-	CFsInfoDialog(CWnd* pParent = NULL);   // standard constructor
+	bool GetRandomBytes(unsigned char *buf, DWORD len);
 
-	FsInfo m_info;
-	CString m_mountPoint;
-	
+	RandomBytes();
 
-// Dialog Data
-	//{{AFX_DATA(CFsInfoDialog)
-	// Dialog Data
-#ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_FSINFO };
-#endif
-	
-	//}}AFX_DATA
+	// disallow copying
+	RandomBytes(RandomBytes const&) = delete;
+	void operator=(RandomBytes const&) = delete;
 
-
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CFsInfoDialog)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-
-	// Generated message map functions
-	//{{AFX_MSG(CFsInfoDialog)
-		// NOTE: the ClassWizard will add member functions here
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
-public:
-
-	afx_msg void OnBnClickedOk();
-	virtual BOOL OnInitDialog();
-
+	virtual ~RandomBytes();
 };
-
-//{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 

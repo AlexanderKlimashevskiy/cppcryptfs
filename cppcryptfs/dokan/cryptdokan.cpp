@@ -66,13 +66,14 @@ THE SOFTWARE.
 
 #include <assert.h>
 
-#include "filename/cryptfilename.h"
-#include "config/cryptconfig.h"
-#include "context/cryptcontext.h"
-#include "util/fileutil.h"
+#include "libcppcryptfs/cryptfilename.h"
+#include "libcppcryptfs/cryptconfig.h"
+#include "libcppcryptfs/cryptcontext.h"
+#include "libcppcryptfs/fileutil.h"
 #include "file/cryptfile.h"
-#include "crypt/cryptdefs.h"
-#include "util/util.h"
+#include "winutil/winutil.h"
+#include "libcppcryptfs/cryptdefs.h"
+#include "libcppcryptfs/util.h"
 
 #include "file/iobufferpool.h"
 

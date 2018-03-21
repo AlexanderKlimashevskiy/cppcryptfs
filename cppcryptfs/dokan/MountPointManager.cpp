@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "dokan/dokan.h"
 #include "cryptdokan.h"
 #include "cryptdokanpriv.h"
-#include "context/cryptcontext.h"
+#include "libcppcryptfs/cryptcontext.h"
 #include "CryptThreadData.h"
 #include "MountPointManager.h"
 #include <unordered_map>
