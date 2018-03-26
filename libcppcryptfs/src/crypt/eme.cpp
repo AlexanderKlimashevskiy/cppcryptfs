@@ -38,8 +38,6 @@ THE SOFTWARE.
 // "A Parallelizable Enciphering Mode" by Halevi and Rogaway.
 // This is an implementation of EME in Go.
 
-#include <windows.h>
-
 #include "libcppcryptfs/eme.h"
 #include "libcppcryptfs/crypt.h"
 #include "openssl/aes.h"

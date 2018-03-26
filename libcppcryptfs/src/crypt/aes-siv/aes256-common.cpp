@@ -1,4 +1,4 @@
-#include <windows.h>
+
 #include "libcppcryptfs/aes256-common.h"
 
 void aes256_xor(uint8_t *buf, const uint8_t *xorval, const size_t len)

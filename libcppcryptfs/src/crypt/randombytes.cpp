@@ -48,7 +48,6 @@ RandomBytes::RandomBytes()
 
 	m_bufpos = RANDOM_POOL_SIZE;
 
-	InitializeCriticalSection(&m_crit);
 }
 
 RandomBytes::~RandomBytes()
@@ -57,17 +56,17 @@ RandomBytes::~RandomBytes()
 	if (m_pRandBuf)
 		delete m_pRandBuf;
 
-	DeleteCriticalSection(&m_crit);
+	
 }
 
 void RandomBytes::lock()
 {
-	EnterCriticalSection(&m_crit);
+	m_lock.lock();
 }
 
 void RandomBytes::unlock()
 {
-	LeaveCriticalSection(&m_crit);
+	m_lock.unlock();
 }
 
 bool RandomBytes::GetRandomBytes(unsigned char *buf, DWORD len)

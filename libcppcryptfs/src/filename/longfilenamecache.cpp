@@ -26,7 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include <windows.h>
+
 
 #include "libcppcryptfs/LongFilenameCache.h"
 
@@ -62,8 +62,6 @@ LongFilenameCache::LongFilenameCache()
 	m_hits = 0;
 
 	m_map.reserve(LFN_CACHE_ENTRIES);
-
-	InitializeCriticalSection(&m_crit);
 }
 
 LongFilenameCache::~LongFilenameCache()
@@ -79,18 +77,17 @@ LongFilenameCache::~LongFilenameCache()
 		delete node;
 	}
 
-	DeleteCriticalSection(&m_crit);
 }
 
 
 void LongFilenameCache::lock()
 {
-	EnterCriticalSection(&m_crit);
+	m_lock.lock();
 }
 
 void LongFilenameCache::unlock()
 {
-	LeaveCriticalSection(&m_crit);
+	m_lock.unlock();
 }
 
 bool LongFilenameCache::check_node_clean(LongFilenameCacheNode *node, const wstring& path)
@@ -108,7 +105,7 @@ bool LongFilenameCache::check_node_clean(LongFilenameCacheNode *node, const wstr
 
 
 
-bool LongFilenameCache::lookup(LPCWSTR base64_hash, wstring *path, string *actual_encrypted)
+bool LongFilenameCache::lookup(const wchar_t * base64_hash, wstring *path, string *actual_encrypted)
 {
 
 	const WCHAR *key = base64_hash;
@@ -172,7 +169,7 @@ bool LongFilenameCache::lookup(LPCWSTR base64_hash, wstring *path, string *actua
 }
 
 
-bool LongFilenameCache::store_if_not_there(LPCWSTR base64_hash, LPCWSTR path, const char *actual_encrypted)
+bool LongFilenameCache::store_if_not_there(const wchar_t * base64_hash, const wchar_t * path, const char *actual_encrypted)
 {
 
 	bool rval = true;
@@ -235,7 +232,7 @@ bool LongFilenameCache::store_if_not_there(LPCWSTR base64_hash, LPCWSTR path, co
 	return rval;
 }
 
-void LongFilenameCache::remove(LPCWSTR base64_hash)
+void LongFilenameCache::remove(const wchar_t * base64_hash)
 {
 	const WCHAR *key = base64_hash;
 

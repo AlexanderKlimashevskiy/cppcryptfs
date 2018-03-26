@@ -27,7 +27,7 @@ THE SOFTWARE.
 */
 
 
-#include <Windows.h>
+#include <windows.h>
 #include "Shlwapi.h"
 
 #include <iostream>

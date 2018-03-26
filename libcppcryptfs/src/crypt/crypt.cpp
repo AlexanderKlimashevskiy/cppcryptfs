@@ -27,7 +27,6 @@ THE SOFTWARE.
 */
 
 
-#include <windows.h>
 
 #include <openssl/evp.h>
 #include <openssl/kdf.h>

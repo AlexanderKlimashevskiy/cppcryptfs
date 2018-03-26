@@ -1,4 +1,4 @@
-#include <Windows.h>
+
 #include "libcppcryptfs/aes256-ctr.h"
 #include <string.h>
 

@@ -29,6 +29,7 @@ THE SOFTWARE.
 #pragma once
 
 #include <windows.h>
+#include <mutex>
 
 #include "libcppcryptfs/LockZeroBuffer.h"
 
@@ -43,7 +44,7 @@ private:
 
 	DWORD m_bufpos;
 
-	CRITICAL_SECTION m_crit;
+	mutex m_lock;
 
 
 	void lock();

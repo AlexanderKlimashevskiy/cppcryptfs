@@ -27,7 +27,6 @@ THE SOFTWARE.
 */
 
 
-#include <windows.h>
 
 #include "libcppcryptfs/aes.h"
 

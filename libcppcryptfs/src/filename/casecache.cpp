@@ -75,7 +75,6 @@ CaseCache::CaseCache()
 
 	m_map.reserve(CASE_CACHE_ENTRIES);
 
-	InitializeCriticalSection(&m_crit);
 }
 
 
@@ -91,17 +90,16 @@ CaseCache::~CaseCache()
 		delete node;
 	}
 
-	DeleteCriticalSection(&m_crit);
 }
 
 void CaseCache::lock()
 {
-	EnterCriticalSection(&m_crit);
+	m_lock.lock();
 }
 
 void CaseCache::unlock()
 {
-	LeaveCriticalSection(&m_crit);
+	m_lock.unlock();
 }
 
 bool CaseCache::check_node_clean(CaseCacheNode *node)

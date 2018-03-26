@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #pragma once
 
+#include <windows.h>
 #include <string>
 
 using namespace std;
@@ -35,13 +36,13 @@ using namespace std;
 template<typename T>
 class LockZeroBuffer
 {
-	BOOL m_IsLocked;
+	bool m_IsLocked;
 public:
 	// disallow copying
 	LockZeroBuffer(LockZeroBuffer const&) = delete;
 	void operator=(LockZeroBuffer const&) = delete;
 
-	BOOL IsLocked() { return m_IsLocked; };
+	bool IsLocked() { return m_IsLocked; };
 	T *m_buf;
 	unsigned int m_len;
 
@@ -62,9 +63,9 @@ public:
 			//
 			// Attempt to increase the minimum working set size to 1MB
 			
-			const SIZE_T desired_min_ws = 1024 * 1024;
+			const size_t desired_min_ws = 1024 * 1024;
 
-			SIZE_T min_ws, max_ws;
+			size_t min_ws, max_ws;
 
 			if (GetProcessWorkingSetSize(GetCurrentProcess(), &min_ws, &max_ws)) {
 				if (min_ws < desired_min_ws) {

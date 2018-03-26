@@ -62,8 +62,6 @@ DirIvCache::DirIvCache()
 	m_hits = 0;
 	m_ttl = 0;
 	m_map.reserve(DIR_IV_CACHE_ENTRIES);
-
-	InitializeCriticalSection(&m_crit);
 }
 
 DirIvCache::~DirIvCache()
@@ -78,8 +76,6 @@ DirIvCache::~DirIvCache()
 		DirIvCacheNode *node = *it;
 		delete node;
 	}
-
-	DeleteCriticalSection(&m_crit);
 }
 
 void DirIvCache::normalize_key(wstring& key)
@@ -91,12 +87,12 @@ void DirIvCache::normalize_key(wstring& key)
 
 void DirIvCache::lock()
 {
-	EnterCriticalSection(&m_crit);
+	m_lock.lock();
 }
 
 void DirIvCache::unlock()
 {
-	LeaveCriticalSection(&m_crit);
+	m_lock.unlock();
 }
 
 bool DirIvCache::check_node_clean(DirIvCacheNode *node, const wstring& path)

@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #include <unordered_map>
 #include <list>
+#include <mutex>
 
 using namespace std;
 
@@ -67,7 +68,7 @@ private:
 
 	list<DirIvCacheNode*> m_spare_node_list;
 
-	CRITICAL_SECTION m_crit;
+	mutex m_lock;
 
 	long long m_lookups;
 	long long m_hits;

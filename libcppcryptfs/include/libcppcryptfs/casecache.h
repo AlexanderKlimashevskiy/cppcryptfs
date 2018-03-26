@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <windows.h>
 #include <unordered_map>
 #include <string>
+#include <mutex>
 
 using namespace std;
 
@@ -70,7 +71,7 @@ private:
 
 	list<CaseCacheNode*> m_spare_node_list;
 
-	CRITICAL_SECTION m_crit;
+	mutex m_lock;
 
 	long long m_lookups;
 	long long m_hits;

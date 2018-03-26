@@ -1,4 +1,4 @@
-#include <Windows.h>
+
 #include "libcppcryptfs/aes256-cmac.h"
 #include "libcppcryptfs/aes256-common.h"
 #include <string.h>

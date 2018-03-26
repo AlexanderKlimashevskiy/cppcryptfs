@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #include <unordered_map>
 #include <list>
+#include <mutex>
 
 using namespace std;
 
@@ -81,7 +82,7 @@ private:
 
 	list<LongFilenameCacheNode*> m_spare_node_list;
 
-	CRITICAL_SECTION m_crit;
+	mutex m_lock;
 
 	long long m_lookups;
 	long long m_hits;
@@ -101,11 +102,11 @@ public:
 
 	virtual ~LongFilenameCache();
 
-	bool lookup(LPCWSTR base64_hash, wstring *path, string *actual_encrypted);
+	bool lookup(const wchar_t * base64_hash, wstring *path, string *actual_encrypted);
 
-	bool store_if_not_there(LPCWSTR base64_hash, LPCWSTR path, const char *actual_encrypted);
+	bool store_if_not_there(const wchar_t * base64_hash, const wchar_t * path, const char *actual_encrypted);
 
-	void remove(LPCWSTR base64_hash);
+	void remove(const wchar_t * base64_hash);
 	
 	long long hits() { long long rval; lock(); rval = m_hits; unlock(); return rval; }
 	long long lookups() { long long rval; lock(); rval = m_lookups; unlock(); return rval; }
